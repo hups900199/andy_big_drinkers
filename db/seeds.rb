@@ -12,30 +12,53 @@ Image.destroy_all
 Anime.destroy_all
 Type.destroy_all
 
+def cutString(raw, target)
+  unwanted_string_length = raw.index(target) + target.length + 1
+
+  return raw[unwanted_string_length..]
+end
+
 # Dir["/path/to/directory/*.rb"].each {|file| require file }
 
-raw_directory = "animeTVimage"
-path = "./db/#{raw_directory}/*"
+raw_directory   = "animeTVimage"
+inner_directory = "stats"
+path            = "./db/#{raw_directory}/*"
 
 n = 0
 
 Dir[path].each do |sub_directory|
-  unwanted_string_length = sub_directory.index(raw_directory) + raw_directory.length + 1
-  anime_name = sub_directory[unwanted_string_length..]
+  anime_name = cutString(sub_directory, raw_directory)
+
+  sub_path       = "#{sub_directory}/*.jpg"
+  sub_inner_path = "#{sub_directory}/#{inner_directory}/#{anime_name}/*.jpg"
+
+  anime_images = Dir[sub_path]
+
+  if anime_images.count == 0
+    anime_images = Dir[sub_inner_path]
+  end
 
   anime = Anime.find_or_create_by(name: anime_name)
 
-  n += 1
-
   if anime.valid?
-    new_image = anime.images.build(
-      name:  "first #{n}",
-      price: rand(5000..100_000).to_i
-    )
 
-    puts "Invalid Anime #{anime_name}" unless new_image&.valid?
+    anime_images.each do |anime_image|
+      image_name = cutString(anime_image, anime_name)
 
-    new_image.save!
+      if image_name.include? inner_directory
+        image_name = cutString(image_name, anime_name)
+        image_name[0..inner_directory.length - 1] = anime_name
+      end
+
+      new_image = anime.images.build(
+        name:  image_name,
+        price: rand(5000..100_000).to_i
+      )
+
+      puts "Invalid Anime #{image_name}" unless new_image&.valid?
+      puts "Good #{image_name}"
+      new_image.save!
+    end
   else
     puts "Invalid anime #{anime} for anime #{anime_name}"
   end
