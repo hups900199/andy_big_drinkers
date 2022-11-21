@@ -1,10 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+require "csv"
 
 # Clear the products and categories tables.
 Product.destroy_all
@@ -12,55 +6,98 @@ Image.destroy_all
 Anime.destroy_all
 Type.destroy_all
 
-def cutString(raw, target)
+# Remove unwanted string.
+def shorten_string(raw, target)
   unwanted_string_length = raw.index(target) + target.length + 1
 
-  return raw[unwanted_string_length..]
+  raw[unwanted_string_length..]
 end
 
-# Dir["/path/to/directory/*.rb"].each {|file| require file }
+format_list = {
+  /Mirai_Nikki_TV/                                          => "Mirai Nikki (TV): Ura Mirai Nikki",
+  /__/                                                      => ": ",
+  /_/                                                       => " ",
+  / TV/                                                     => " (TV)",
+  / 2011/                                                   => " (2011)",
+  /Fate Zero/                                               => "Fate/Zero",
+  /Steins Gate/                                             => "Steins;Gate",
+  /Dr Stone/                                                => "Dr. Stone",
+  /%E2%98%85/                                               => "★",
+  /Haikyuu/                                                 => "Haikyuu!!",
+  /Re Zero/                                                 => "Re:Zero",
+  /Angel Beats/                                             => "Angel Beats!",
+  /Chuunibyou demo Koi ga Shitai/                           => "Chuunibyou demo Koi ga Shitai!",
+  /Kaichou wa Maid-sama/                                    => "Kaichou wa Maid-sama!",
+  /Ano Hi Mita Hana no Namae wo Bokutachi wa Mada Shiranai/ => "Ano Hi Mita Hana no Namae wo Bokutachi wa Mada Shiranai.",
+  /тИЪA/                                                    => "√A",
+  /Hataraku Maou-sama/                                      => "Hataraku Maou-sama!",
+  /Durarara/                                                => "Durarara!!",
+  /Kimi no Na wa/                                           => "Kimi no Na wa.",
+  /Akame ga Kill/                                           => "Akame ga Kill!",
+  /Kono Subarashii Sekai ni Shukufuku wo/                   => "Kono Subarashii Sekai ni Shukufuku wo!",
+  /Toradora/                                                => "Toradora!",
+  /Yahari Ore no Seishun Love Comedy wa Machigatteiru/      => "Yahari Ore no Seishun Love Comedy wa Machigatteiru."
+}
+
+# Loop through the rows of first CSV file.
+csv_file = Rails.root.join("db/anime_with_synopsis_shorten.csv")
+csv_data = File.read(csv_file)
+
+animes = CSV.parse(csv_data, headers: true)
+
+animes.each do |anime|
+  new_anime = Anime.find_or_create_by(name: anime["Name"])
+  new_anime.description = anime["sypnopsis"]
+  new_anime.save!
+end
 
 raw_directory   = "animeTVimage"
 inner_directory = "stats"
 path            = "./db/#{raw_directory}/*"
 
-n = 0
-
 Dir[path].each do |sub_directory|
-  anime_name = cutString(sub_directory, raw_directory)
+  anime_name = shorten_string(sub_directory, raw_directory)
+
+  reformat_anime_name = anime_name
+
+  # Loop through format list to get proper anime name.
+  format_list.each do |shape, sides|
+    reformat_anime_name = reformat_anime_name.gsub(shape, sides)
+  end
 
   sub_path       = "#{sub_directory}/*.jpg"
   sub_inner_path = "#{sub_directory}/#{inner_directory}/#{anime_name}/*.jpg"
 
   anime_images = Dir[sub_path]
 
-  if anime_images.count == 0
-    anime_images = Dir[sub_inner_path]
-  end
+  anime_images = Dir[sub_inner_path] if anime_images.count.zero?
 
-  anime = Anime.find_or_create_by(name: anime_name)
+  anime = Anime.find_or_create_by(name: reformat_anime_name)
 
-  if anime.valid?
+  if anime&.valid?
 
     anime_images.each do |anime_image|
-      image_name = cutString(anime_image, anime_name)
+      image_name = shorten_string(anime_image, anime_name)
 
       if image_name.include? inner_directory
-        image_name = cutString(image_name, anime_name)
+        image_name = shorten_string(image_name, anime_name)
         image_name[0..inner_directory.length - 1] = anime_name
       end
 
+      # Remove .jpg on image name.
+      # image_name[0...-4]
+
       new_image = anime.images.build(
-        name:  image_name,
+        name:  image_name[0...-4],
         price: rand(5000..100_000).to_i
       )
 
-      puts "Invalid Anime #{image_name}" unless new_image&.valid?
-      puts "Good #{image_name}"
+      puts "Invalid Anime #{image_name[0...-4]}" unless new_image&.valid?
+      # puts "Good #{image_name}"
       new_image.save!
     end
   else
-    puts "Invalid anime #{anime} for anime #{anime_name}"
+    puts "Invalid anime category #{reformat_anime_name}."
   end
 end
 
