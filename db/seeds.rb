@@ -13,6 +13,11 @@ def shorten_string(raw, target)
   raw[unwanted_string_length..]
 end
 
+type_list = {
+  "Watercup" => rand(5000..100_000).to_i,
+  "T-Shirt"  => rand(5000..100_000).to_i
+}
+
 format_list = {
   /Mirai_Nikki_TV/                                          => "Mirai Nikki (TV): Ura Mirai Nikki",
   /__/                                                      => ": ",
@@ -101,5 +106,13 @@ Dir[path].each do |sub_directory|
   end
 end
 
+# Loop through type list to get product types.
+type_list.each do |shape, sides|
+  new_type = Type.find_or_create_by(name: shape)
+  new_type.price = sides
+  new_type.save!
+end
+
 puts "Created #{Anime.count} Animes"
 puts "Created #{Image.count} Images"
+puts "Created #{Type.count} Types"
