@@ -106,13 +106,25 @@ Dir[path].each do |sub_directory|
   end
 end
 
+images = Image.all
+
 # Loop through type list to get product types.
 type_list.each do |shape, sides|
   new_type = Type.find_or_create_by(name: shape)
   new_type.price = sides
   new_type.save!
+
+  images.each do |each_image|
+    Product.create(
+      name: new_type.name + ' - ' + each_image.name,
+      type: new_type,
+      image: each_image,
+      stock: 10
+    )
+  end
 end
 
 puts "Created #{Anime.count} Animes"
 puts "Created #{Image.count} Images"
 puts "Created #{Type.count} Types"
+puts "Created #{Product.count} Products"
