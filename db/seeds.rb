@@ -5,6 +5,7 @@ Product.destroy_all
 Image.destroy_all
 Anime.destroy_all
 Type.destroy_all
+AdminUser.destroy_all
 
 # Remove unwanted string.
 def shorten_string(raw, target)
@@ -128,3 +129,5 @@ puts "Created #{Anime.count} Animes"
 puts "Created #{Image.count} Images"
 puts "Created #{Type.count} Types"
 puts "Created #{Product.count} Products"
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

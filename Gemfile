@@ -70,3 +70,9 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem 'activeadmin'
+# Plus integrations with:
+gem 'devise'
+
+gem 'kaminari'
