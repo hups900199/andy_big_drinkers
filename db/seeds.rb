@@ -15,7 +15,7 @@ def shorten_string(raw, target)
 end
 
 type_list = {
-  "Watercup" => rand(5000..100_000).to_i,
+  "Water-Cup" => rand(5000..100_000).to_i,
   "T-Shirt"  => rand(5000..100_000).to_i
 }
 
@@ -119,11 +119,20 @@ type_list.each do |shape, sides|
   new_type.price = sides
   new_type.save!
 
+  random_image_name = shape
+
+  if shape.include? "-"
+    separate_point = shape.index("-")
+    part_one = shape[0..separate_point - 1]
+    part_two = shape[separate_point + 1..shape.length]
+    random_image_name = [part_one, part_two].join(",")
+  end
+
   # Attach image
-  # query = URI.encode_www_form_component([horse.name + " horse", breed.name + " horse"].join(","))
-  # downloaded_image = URI.open("https://source.unsplash.com/600x600/?#{query}")
-  # new_type.image.attach(io: downloaded_image, filename: "m-#{[horse.name, breed.name].join('-')}.jpg")
-  # sleep(1)
+  query = URI.encode_www_form_component(random_image_name)
+  downloaded_image = URI.open("https://source.unsplash.com/600x600/?#{query}")
+  new_type.image.attach(io: downloaded_image, filename: "m-#{shape}.jpg")
+  sleep(1)
 
   images.each do |each_image|
     Product.create(
