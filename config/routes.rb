@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'animes/index'
   get 'animes/show'
+
+  resources :animes, only: [:index, :show]
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

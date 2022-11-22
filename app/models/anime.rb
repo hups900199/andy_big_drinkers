@@ -1,4 +1,6 @@
 class Anime < ApplicationRecord
+  paginates_per 10
+
   has_many :images
 
   validates :name, presence: true, uniqueness: true

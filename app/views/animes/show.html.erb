@@ -1,2 +1,14 @@
-<h1>Animes#show</h1>
-<p>Find me in app/views/animes/show.html.erb</p>
+<div class="container">
+<h1><%= @anime.name %></h1>
+<ul>
+  <li>Username: <%= @anime.name %></li>
+  <li>Username: <%= @anime.description %></li>
+  <li><%= pluralize(@anime.images.count, 'Image') %>:</li>
+    <ul>
+      <% @anime.images.each do |image| %>
+      <li><%= image.name %></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+</div>
