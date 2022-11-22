@@ -1,2 +1,13 @@
-<h1>Images#index</h1>
-<p>Find me in app/views/images/index.html.erb</p>
+<div id="intro" class="p-5 text-center">
+  <h1 class="mb-0">Images</h1>
+</div>
+
+<%= paginate @images %>
+
+<div class="container">
+<ul>
+  <% @images.each do |image| %>
+    <li><%= link_to image.name, image %></li>
+  <% end %>
+</ul>
+</div>

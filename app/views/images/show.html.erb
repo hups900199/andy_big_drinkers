@@ -1,2 +1,14 @@
-<h1>Images#show</h1>
-<p>Find me in app/views/images/show.html.erb</p>
+<div class="container">
+<h1><%= @image.name %></h1>
+<ul>
+  <li>Anime Title: <%= @image.anime.name %></li>
+  <li>Description: <%= @image.anime.description %></li>
+  <% if @image.image.present? %>
+      <div class="card-image">
+        <figure class="image">
+          <%= image_tag @image.image %>
+        </figure>
+      </div>
+  <% end %>
+</ul>
+</div>

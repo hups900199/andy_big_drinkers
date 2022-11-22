@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   get 'images/index'
   get 'images/show'
-  root to: "home#index"
   get 'about/index'
   get 'home/index'
   get 'animes/index'
   get 'animes/show'
+
+  root to: "home#index"
+
+  resources :images, only: [:index, :show]
 
   resources :animes, only: [:index, :show] do
     #movies/search/(:format)
