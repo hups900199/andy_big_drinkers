@@ -1,11 +1,11 @@
 require "csv"
 
 # Clear the products and categories tables.
+AdminUser.destroy_all
 Product.destroy_all
 Image.destroy_all
 Anime.destroy_all
 Type.destroy_all
-AdminUser.destroy_all
 
 # Remove unwanted string.
 def shorten_string(raw, target)
@@ -101,6 +101,10 @@ Dir[path].each do |sub_directory|
       puts "Invalid Anime #{image_name[0...-4]}" unless new_image&.valid?
       # puts "Good #{image_name}"
       new_image.save!
+
+      # Attach image
+      new_image.image.attach(io: File.open(anime_image), filename: image_name)
+      sleep(1)
     end
   else
     puts "Invalid anime category #{reformat_anime_name}."
@@ -114,6 +118,12 @@ type_list.each do |shape, sides|
   new_type = Type.find_or_create_by(name: shape)
   new_type.price = sides
   new_type.save!
+
+  # Attach image
+  # query = URI.encode_www_form_component([horse.name + " horse", breed.name + " horse"].join(","))
+  # downloaded_image = URI.open("https://source.unsplash.com/600x600/?#{query}")
+  # new_type.image.attach(io: downloaded_image, filename: "m-#{[horse.name, breed.name].join('-')}.jpg")
+  # sleep(1)
 
   images.each do |each_image|
     Product.create(
