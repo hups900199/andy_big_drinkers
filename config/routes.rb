@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'images/index'
+  get 'images/show'
   root to: "home#index"
   get 'about/index'
   get 'home/index'
