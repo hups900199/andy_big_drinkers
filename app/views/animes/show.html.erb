@@ -1,8 +1,8 @@
 <div class="container">
 <h1><%= @anime.name %></h1>
 <ul>
-  <li>Username: <%= @anime.name %></li>
-  <li>Username: <%= @anime.description %></li>
+  <li>Anime Title: <%= @anime.name %></li>
+  <li>Description: <%= @anime.description %></li>
   <li><%= pluralize(@anime.images.count, 'Image') %>:</li>
     <ul>
       <% @anime.images.each do |image| %>
