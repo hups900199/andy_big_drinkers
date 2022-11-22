@@ -164,6 +164,8 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.3)
     msgpack (1.6.0)
+    net-http (0.3.0)
+      uri
     net-imap (0.3.1)
       net-protocol
     net-pop (0.1.2)
@@ -259,6 +261,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    uri (0.11.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -291,6 +294,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kaminari
+  net-http
   puma (~> 5.0)
   rails (~> 7.0.4)
   sassc-rails
