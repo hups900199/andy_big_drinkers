@@ -5,7 +5,7 @@ ActiveAdmin.register Image do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :price, :anime_id
+  permit_params :name, :price, :anime_id, :image
   #
   # or
   #
