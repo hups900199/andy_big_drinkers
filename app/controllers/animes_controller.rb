@@ -1,6 +1,6 @@
 class AnimesController < ApplicationController
   def index
-    @animes = Anime.includes(:images).all.order("name DESC").page params[:page]
+    @animes = Anime.includes(:images).all.order("name ASC").page params[:page]
   end
 
   def show
@@ -14,10 +14,10 @@ class AnimesController < ApplicationController
 
     if search_anime != ""
       @totals = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search).where(id: search_anime)
-      @animes = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search).where(id: search_anime).order("name DESC").page params[:page]
+      @animes = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search).where(id: search_anime).order("name ASC").page params[:page]
     elsif wildcard_search != "%%"
       @totals = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search)
-      @animes = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search).order("name DESC").page params[:page]
+      @animes = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search).order("name ASC").page params[:page]
     else
       @totals = Anime.all
       @animes = Anime.all.order("name DESC").page params[:page]
