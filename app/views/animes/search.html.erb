@@ -1,0 +1,21 @@
+<div id="intro" class="p-5 text-center">
+    <h1 class="mb-0">
+    <% if @totals.count > 0 %>
+      <p><%= "Name: " + params[:keywords] unless params[:keywords] == "" %></p>
+      <p>Anime Title: <%= params[:anime] == "" ? "All" : @animes.first.name %></p>
+      <p>Found <%= pluralize(@totals.count, 'Anime') %></p>
+    <% else %>
+      <p>Oops! We cannot find any matched result!<p>
+    <% end %>
+    </h1>
+</div>
+
+<%= paginate @animes %>
+
+<div class="container">
+<ul>
+  <% @animes.each do |anime| %>
+    <li><%= link_to anime.name, anime %></li>
+  <% end %>
+</ul>
+<div>

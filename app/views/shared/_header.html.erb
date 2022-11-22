@@ -7,15 +7,15 @@
           <li><a href=<%= animes_index_path %> class="nav-link px-2 text-white">Animes</a></li>
         </ul>
 
-        <%= form_with(url: root_path, method: :get, local: true) do %>
+        <%= form_with(url: search_animes_path, method: :get, local: true) do %>
           <div class="input-group">
           <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search" name="keywords"/>
 
-            <label class="input-group-text" for="searchCategory">Type</label>
-            <select id="searchCategory" class="form-control form-control-dark" name="type">
+            <label class="input-group-text" for="searchCategory">Anime Title</label>
+            <select id="searchCategory" class="form-control form-control-dark" name="anime">
               <option value="">All</option>
-              <% Type.all.each do |type| %>
-              <option value=<%= type.id %>><%= type.name %></option>
+              <% Anime.all.each do |anime| %>
+              <option value=<%= anime.id %>><%= anime.name %></option>
               <% end %>
             </select>
 

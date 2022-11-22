@@ -5,7 +5,14 @@ Rails.application.routes.draw do
   get 'animes/index'
   get 'animes/show'
 
-  resources :animes, only: [:index, :show]
+  resources :animes, only: [:index, :show] do
+    #movies/search/(:format)
+    collection do
+      get "search"
+    end
+
+    get '/page/:page', action: :index, on: :collection
+  end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
