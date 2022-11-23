@@ -1,14 +1,21 @@
 <div class="container">
-<h1><%= @image.name %></h1>
-<ul>
-  <li>Anime Title: <%= link_to @image.anime.name, @image.anime %></li>
-  <li>Description: <%= @image.anime.description %></li>
+  <h1><%= @image.name %></h1>
+  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
   <% if @image.image.present? %>
-      <div class="card-image">
-        <figure class="image">
-          <%= image_tag @image.image %>
-        </figure>
+    <div class="col-sm-4">
+        <div class="card">
+          <%= image_tag(@image.image, :class => "card-img-top") %>
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to @image.anime.name, @image.anime %></h5>
+            <p class="card-text"><%= @image.anime.description %></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Price: <%= @image.price %></li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+          </div>
+        </div>
       </div>
   <% end %>
-</ul>
 </div>
