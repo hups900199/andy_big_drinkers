@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'types/show'
   get 'products/index'
   get 'products/show'
+  get 'products/find'
   get 'images/index'
   get 'images/show'
   get 'about/index'
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :types, only: [:index, :show]
-  resources :products, only: [:index, :show]
+  resources :products, only: [:index, :show, :find]
   resources :images, only: [:index, :show]
 
   resources :animes, only: [:index, :show] do

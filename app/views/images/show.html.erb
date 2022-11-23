@@ -13,8 +13,11 @@
             <li class="list-group-item">Price: <%= @image.price %></li>
           </ul>
           <div class="card-body">
-            <a href="#" class="btn btn-primary">Add to Cart</a>
+            <% @image.types.each do |type| %>
+              <%= link_to type.name, products_find_path(:type => type, :anime => @image), :class => "card-link" %>
+            <% end %>
           </div>
+
         </div>
       </div>
   <% end %>

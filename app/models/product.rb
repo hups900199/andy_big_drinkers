@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  paginates_per 6
+
   belongs_to :type
   belongs_to :image
 
