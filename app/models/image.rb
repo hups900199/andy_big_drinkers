@@ -1,4 +1,6 @@
 class Image < ApplicationRecord
+  paginates_per 6
+
   has_many :products
   has_many :types, through: :products
 
