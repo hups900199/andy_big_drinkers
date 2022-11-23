@@ -1,7 +1,7 @@
 <div class="container">
 <h1><%= @image.name %></h1>
 <ul>
-  <li>Anime Title: <%= @image.anime.name %></li>
+  <li>Anime Title: <%= link_to @image.anime.name, @image.anime %></li>
   <li>Description: <%= @image.anime.description %></li>
   <% if @image.image.present? %>
       <div class="card-image">

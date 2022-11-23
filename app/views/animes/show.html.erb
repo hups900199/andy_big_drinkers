@@ -7,6 +7,13 @@
     <ul>
       <% @anime.images.each do |image| %>
       <li><%= image.name %></li>
+        <% if image.image.present? %>
+          <div class="card-image">
+            <figure class="image">
+              <%= image_tag image.image %>
+            </figure>
+          </div>
+        <% end %>
       <% end %>
     </ul>
   </li>
