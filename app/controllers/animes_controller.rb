@@ -20,7 +20,7 @@ class AnimesController < ApplicationController
       @animes = Anime.where("name LIKE ? OR description LIKE ?", wildcard_search, wildcard_search).order("name ASC").page params[:page]
     else
       @totals = Anime.all
-      @animes = Anime.all.order("name DESC").page params[:page]
+      @animes = Anime.all.order("name ASC").page params[:page]
     end
   end
 end

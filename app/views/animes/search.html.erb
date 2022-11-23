@@ -1,7 +1,7 @@
 <div id="intro" class="p-5 text-center">
     <h1 class="mb-0">
     <% if @totals.count > 0 %>
-      <p><%= "Name: " + params[:keywords] unless params[:keywords] == "" %></p>
+      <p><%= "Name / Description: " + params[:keywords] unless params[:keywords] == "" %></p>
       <p>Anime Title: <%= params[:anime] == "" ? "All" : @animes.first.name %></p>
       <p>Found <%= pluralize(@totals.count, 'Anime') %></p>
     <% else %>
@@ -13,9 +13,21 @@
 <%= paginate @animes %>
 
 <div class="container">
-<ul>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
   <% @animes.each do |anime| %>
-    <li><%= link_to anime.name, anime %></li>
+    <div class="card text-center">
+      <% if anime.images.first.present? %>
+        <%= link_to image_tag(anime.images.first.image, alt: anime.images.first.name, size:"400x600", :class => "card-img-top"), anime %>
+      <% else %>
+        <%= link_to image_tag('Logo.png', alt: "Logo", size:"500x500", :class => "card-img-top"), anime %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title"><%= link_to anime.name, anime %></h5>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
   <% end %>
-</ul>
-<div>
+
+  </div>
+</div>

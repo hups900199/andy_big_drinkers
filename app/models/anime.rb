@@ -1,5 +1,5 @@
 class Anime < ApplicationRecord
-  paginates_per 10
+  paginates_per 6
 
   has_many :images
 
