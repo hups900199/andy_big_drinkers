@@ -3,8 +3,11 @@
   <ul>
     <li>Anime Title: <%= @anime.name %></li>
     <li>Description: <%= @anime.description %></li>
-    <li><%= pluralize(@anime.images.count, 'Image') %>:</li>
   </ul>
+
+  <div id="intro" class="p-5 text-center">
+    <h1 class="mb-0"><%= pluralize(@anime.images.count, 'Image') %></h1>
+  </div>
 
   <div class="row row-cols-1 row-cols-md-3 g-4">
   <% @anime.images.each do |image| %>
