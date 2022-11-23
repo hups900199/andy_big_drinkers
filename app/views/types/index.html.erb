@@ -1,2 +1,29 @@
-<h1>Types#index</h1>
-<p>Find me in app/views/types/index.html.erb</p>
+<div id="intro" class="p-5 text-center">
+  <h1 class="mb-0">Types</h1>
+</div>
+
+<%= paginate @types %>
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
+  <% @types.each do |type| %>
+    <div class="card text-center">
+      <% if type.image.present? %>
+        <%= link_to image_tag(type.image, alt: type.name, size:"400x600", :class => "card-img-top"), type %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title"><%= link_to type.name, type %></h5>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Price: <%= type.price %></li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="btn btn-primary">Add to Cart</a>
+      </div>
+    </div>
+  <% end %>
+
+  </div>
+</div>

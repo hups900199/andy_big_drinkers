@@ -1,2 +1,20 @@
-<h1>Types#show</h1>
-<p>Find me in app/views/types/show.html.erb</p>
+<div class="container">
+  <h1><%= @type.name %></h1>
+  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  <% if @type.image.present? %>
+    <div class="col-sm-4">
+        <div class="card">
+          <%= image_tag(@type.image, alt: @type.name, :class => "card-img-top") %>
+          <div class="card-body">
+            <h5 class="card-title"><%= @type.name %></h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Price: <%= @type.price %></li>
+          </ul>
+          <div class="card-body">
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
