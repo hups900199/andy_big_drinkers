@@ -10,7 +10,7 @@
   <% @anime.images.each do |image| %>
       <% if image.image.present? %>
         <div class="card text-center">
-          <%= link_to image_tag(image.image, size:"400x600", :class => "card-img-top"), image %>
+          <%= link_to image_tag(image.image, alt: image.name, size:"400x600", :class => "card-img-top"), image %>
           <div class="card-body">
             <h5 class="card-title"><%= link_to image.name, image %></h5>
             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
