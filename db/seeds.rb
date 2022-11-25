@@ -116,6 +116,7 @@ images = Image.all
 # Loop through type list to get product types.
 type_list.each do |shape, sides|
   new_type = Type.find_or_create_by(name: shape)
+  new_type.description = Faker::Company.bs
   new_type.price = sides
   new_type.save!
 
