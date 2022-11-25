@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'contexts/home'
+  get 'contexts/about'
   get 'types/index'
   get 'types/show'
   get 'products/index'
