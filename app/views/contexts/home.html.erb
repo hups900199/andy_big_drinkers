@@ -1,2 +1,25 @@
-<h1>Contexts#home</h1>
-<p>Find me in app/views/contexts/home.html.erb</p>
+<div id="intro" class="p-5 text-center">
+    <h1 class="mb-0">Welcome to <%= @context.title %>!</h1>
+    <p><%= @context.home %></p>
+</div>
+
+<div class="container">
+  <h2 class="p-5 text-center">Top 10 Products</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
+  <% @products.each do |product| %>
+    <div class="card text-center">
+      <%= link_to image_tag(product.type.image, alt: product.type.name, size:"200x300", :class => "card-img-top"), product %>
+      <%= link_to image_tag(product.image.image, alt: product.image.name, size:"200x300", :class => "card-img-top"), product %>
+      <div class="card-body">
+        <h5 class="card-title"><%= link_to product.name, product %></h5>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">In Stock: <%= product.stock %></li>
+      </ul>
+    </div>
+  <% end %>
+
+  </div>
+</div>

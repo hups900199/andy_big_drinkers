@@ -1,2 +1,14 @@
-<h1>Contexts#about</h1>
-<p>Find me in app/views/contexts/about.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1><%= @context.title %></h1>
+      <% if @context.image.present? %>
+      <%= image_tag(@context.image, draggable: "true", id: "drag1", alt: @context.title) %>
+      <% end %>
+    </div>
+    <div class="col">
+      <h1>About <%= @context.title %></h1>
+      <p><%= @context.about %></p>
+    </div>
+  </div>
+</div>

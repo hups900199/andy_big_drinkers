@@ -5,7 +5,7 @@ ActiveAdmin.register Context do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :title, :home, :about
+  permit_params :title, :home, :about, :image
 
   form do |f|
     f.semantic_errors
