@@ -5,5 +5,6 @@ class ImagesController < ApplicationController
 
   def show
     @image = Image.find(params[:id])
+    @types = @image.types.order("name ASC").page params[:page]
   end
 end

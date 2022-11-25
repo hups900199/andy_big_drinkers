@@ -12,13 +12,30 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Price: <%= @image.price %></li>
           </ul>
-          <div class="card-body">
-            <% @image.types.each do |type| %>
-              <%= link_to type.name, products_find_path(:type => type, :anime => @image), :class => "card-link" %>
-            <% end %>
-          </div>
-
         </div>
       </div>
   <% end %>
+</div>
+
+<%= paginate @types %>
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
+  <% @types.each do |type| %>
+    <% if type.image.present? %>
+      <div class="card text-center">
+        <%= link_to image_tag(type.image, alt: type.name, size:"400x600", :class => "card-img-top"), products_find_path(:type => type, :anime => @image) %>
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to type.name, products_find_path(:type => type, :anime => @image), :class => "card-link" %></h5>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Price: <%= type.price %></li>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+
+  </div>
 </div>

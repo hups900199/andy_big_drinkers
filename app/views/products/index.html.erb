@@ -9,6 +9,8 @@
 
   <% @products.each do |product| %>
     <div class="card text-center">
+      <%= link_to image_tag(product.type.image, alt: product.type.name, size:"200x300", :class => "card-img-top"), product %>
+      <%= link_to image_tag(product.image.image, alt: product.image.name, size:"200x300", :class => "card-img-top"), product %>
       <div class="card-body">
         <h5 class="card-title"><%= link_to product.name, product %></h5>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
