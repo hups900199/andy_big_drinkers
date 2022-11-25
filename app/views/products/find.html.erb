@@ -8,9 +8,9 @@
 
       <% if @product.type.image.present? %>
         <div class="card text-center">
-          <%= image_tag(@product.type.image, alt: @product.type.name, size:"400x600", :class => "card-img-top") %>
+          <%= link_to image_tag(@product.type.image, alt: @product.type.name, size:"400x600", :class => "card-img-top"), @product.type %>
           <div class="card-body">
-            <h5 class="card-title"><%= @product.type.name %></h5>
+            <h5 class="card-title"><%= link_to @product.type.name, @product.type, :class => "card-link" %></h5>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Price: <%= @product.type.price %></li>
@@ -20,9 +20,9 @@
 
       <% if @product.image.image.present? %>
         <div class="card text-center">
-          <%= image_tag(@product.image.image, alt: @product.image.name, size:"400x600", :class => "card-img-top") %>
+          <%= link_to image_tag(@product.image.image, alt: @product.image.name, size:"400x600", :class => "card-img-top"), @product.image %>
           <div class="card-body">
-            <h5 class="card-title"><%= @product.image.name %></h5>
+            <h5 class="card-title"><%= link_to @product.image.name, @product.image, :class => "card-link" %></h5>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Price: <%= @product.image.price %></li>

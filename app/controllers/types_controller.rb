@@ -4,6 +4,7 @@ class TypesController < ApplicationController
   end
 
   def show
-    @type = Type.find(params[:id])
+    @type = Type.includes(:images).find(params[:id])
+    @images = @type.images.order("name ASC").page params[:page]
   end
 end
