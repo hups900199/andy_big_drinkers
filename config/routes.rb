@@ -13,11 +13,12 @@ Rails.application.routes.draw do
   get 'animes/index'
   get 'animes/show'
 
-  root to: "home#index"
+  root to: "contexts#home"
 
   resources :types, only: [:index, :show]
   resources :products, only: [:index, :show, :find]
   resources :images, only: [:index, :show]
+  resources :contexts, only: [:home, :about]
 
   resources :animes, only: [:index, :show] do
     #movies/search/(:format)
