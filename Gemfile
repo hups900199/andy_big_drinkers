@@ -84,3 +84,6 @@ gem 'image_processing'
 gem 'kaminari'
 
 gem "net-http"
+
+# Breadcrumbs
+gem "breadcrumbs_on_rails"

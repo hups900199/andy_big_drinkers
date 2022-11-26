@@ -16,7 +16,7 @@
       <% end %>
       <div class="card-body">
         <h5 class="card-title"><%= link_to anime.name, anime %></h5>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <p class="card-text"><small class="text-muted">Last updated <%= distance_of_time_in_words(anime.updated_at, Date.today) %> ago</small></p>
       </div>
     </div>
   <% end %>
