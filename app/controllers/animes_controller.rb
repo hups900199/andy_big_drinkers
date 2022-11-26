@@ -8,7 +8,7 @@ class AnimesController < ApplicationController
 
   def show
     add_breadcrumb "Animes", "/animes/index"
-    @anime = Anime.find(params[:id])
+    @anime = Anime.includes(:images).find(params[:id])
     add_breadcrumb @anime.name
   end
 
