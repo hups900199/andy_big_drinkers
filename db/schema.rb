@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_025447) do
   create_table "images", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
+    t.integer "discount"
     t.integer "anime_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -104,6 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_025447) do
     t.string "name"
     t.string "description"
     t.decimal "price"
+    t.integer "discount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
