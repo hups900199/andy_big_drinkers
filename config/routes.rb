@@ -1,21 +1,26 @@
 Rails.application.routes.draw do
   get 'contexts/home'
   get 'contexts/about'
+
   get 'types/index'
   get 'types/show'
+  get 'types/new_type'
+  get 'types/recent_update'
+  get 'types/on_sale'
+
   get 'products/index'
   get 'products/show'
   get 'products/find'
+
   get 'images/index'
   get 'images/show'
-  get 'about/index'
-  get 'home/index'
+
   get 'animes/index'
   get 'animes/show'
 
   root to: "contexts#home"
 
-  resources :types, only: [:index, :show]
+  resources :types, only: [:index, :show, :new_type, :recent_update, :on_sale]
   resources :products, only: [:index, :show, :find]
   resources :images, only: [:index, :show]
   resources :contexts, only: [:home, :about]

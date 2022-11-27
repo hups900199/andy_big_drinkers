@@ -95,7 +95,8 @@ Dir[path].each do |sub_directory|
 
       new_image = anime.images.build(
         name:  image_name[0...-4],
-        price: rand(5000..100_000).to_i
+        price: rand(5000..100_000).to_i,
+        discount: 0
       )
 
       puts "Invalid Anime #{image_name[0...-4]}" unless new_image&.valid?
@@ -118,6 +119,7 @@ type_list.each do |shape, sides|
   new_type = Type.find_or_create_by(name: shape)
   new_type.description = Faker::Company.bs
   new_type.price = sides
+  new_type.discount = 0
   new_type.save!
 
   random_image_name = shape
