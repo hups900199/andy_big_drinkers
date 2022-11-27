@@ -6,6 +6,7 @@ Product.destroy_all
 Image.destroy_all
 Anime.destroy_all
 Type.destroy_all
+Context.destroy_all
 
 # Remove unwanted string.
 def shorten_string(raw, target)
@@ -44,6 +45,14 @@ format_list = {
   /Toradora/                                                => "Toradora!",
   /Yahari Ore no Seishun Love Comedy wa Machigatteiru/      => "Yahari Ore no Seishun Love Comedy wa Machigatteiru."
 }
+
+# Create home page context.
+new_context = Context.create(
+  title: "Andy's Big Drinker",
+  home: "Are you ready to get anime products?",
+  about: "Andy's Big Drinkers started in April 2019, and it was a small group of members that enjoyed watching anime. After several months, they decided to start a small business and sell anime side-produces, like water cups and T-shirts with anime images on it. The number has around 10 employees, and they currently sell products through the anime convention events, like Ai-Kon."
+)
+new_context.image.attach(io: File.open("app/assets/images/Logo.png"), filename: "Logo.png")
 
 # Loop through the rows of first CSV file.
 csv_file = Rails.root.join("db/anime_with_synopsis_shorten.csv")
@@ -151,5 +160,6 @@ puts "Created #{Anime.count} Animes"
 puts "Created #{Image.count} Images"
 puts "Created #{Type.count} Types"
 puts "Created #{Product.count} Products"
+puts "Created #{Context.count} Contexts"
 
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
