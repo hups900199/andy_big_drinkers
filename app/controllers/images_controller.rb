@@ -12,4 +12,22 @@ class ImagesController < ApplicationController
     @types = @image.types.order("name ASC").page params[:page]
     add_breadcrumb @image.name
   end
+
+  def new_image
+    add_breadcrumb "Images", "/images/index"
+    @images = Image.includes(:anime).includes(:types).where('images.created_at > ?', DateTime.now - 3.day).order("images.name ASC").page params[:page]
+    add_breadcrumb "New Images"
+  end
+
+  def recent_update
+    add_breadcrumb "Images", "/images/index"
+    @images = Image.includes(:anime).includes(:types).where('images.created_at < ?', DateTime.now - 3.day).where('images.updated_at > ?', DateTime.now - 3.day).order("images.name ASC").page params[:page]
+    add_breadcrumb "Recently Updated"
+  end
+
+  def on_sale
+    add_breadcrumb "Images", "/images/index"
+    @images = Image.includes(:anime).includes(:types).where("images.discount > 0").order("images.name ASC").page params[:page]
+    add_breadcrumb "On Sale"
+  end
 end

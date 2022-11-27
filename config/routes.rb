@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
   get 'images/index'
   get 'images/show'
+  get 'images/new_image'
+  get 'images/recent_update'
+  get 'images/on_sale'
 
   get 'animes/index'
   get 'animes/show'
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :types, only: [:index, :show, :new_type, :recent_update, :on_sale]
   resources :products, only: [:index, :show, :find]
-  resources :images, only: [:index, :show]
+  resources :images, only: [:index, :show, :new_type, :recent_update, :on_sale]
   resources :contexts, only: [:home, :about]
 
   resources :animes, only: [:index, :show] do
