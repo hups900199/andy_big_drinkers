@@ -15,13 +15,13 @@ class ImagesController < ApplicationController
 
   def new_image
     add_breadcrumb "Images", "/images/index"
-    @images = Image.includes(:anime).includes(:types).where('images.created_at > ?', DateTime.now - 3.day).order("images.name ASC").page params[:page]
+    @images = Image.includes(:anime).includes(:types).where('images.created_at > ?', 3.day.ago).order("images.name ASC").page params[:page]
     add_breadcrumb "New Images"
   end
 
   def recent_update
     add_breadcrumb "Images", "/images/index"
-    @images = Image.includes(:anime).includes(:types).where('images.created_at < ?', DateTime.now - 3.day).where('images.updated_at > ?', DateTime.now - 3.day).order("images.name ASC").page params[:page]
+    @images = Image.includes(:anime).includes(:types).where('images.created_at < ?', 3.day.ago).where('images.updated_at > ?', 3.day.ago).order("images.name ASC").page params[:page]
     add_breadcrumb "Recently Updated"
   end
 
