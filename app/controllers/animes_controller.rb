@@ -2,13 +2,15 @@ class AnimesController < ApplicationController
   add_breadcrumb "Home", :root_path
 
   def index
-    add_breadcrumb "Animes", "/animes/index"
     @animes = Anime.includes(:images).all.order("name ASC").page params[:page]
+
+    add_breadcrumb "Animes", "/animes/index"
   end
 
   def show
-    add_breadcrumb "Animes", "/animes/index"
     @anime = Anime.includes(:images).find(params[:id])
+
+    add_breadcrumb "Animes", "/animes/index"
     add_breadcrumb @anime.name
   end
 
@@ -27,5 +29,7 @@ class AnimesController < ApplicationController
       @totals = Anime.all
       @animes = Anime.all.order("name ASC").page params[:page]
     end
+
+    add_breadcrumb "Animes", "/animes/index"
   end
 end

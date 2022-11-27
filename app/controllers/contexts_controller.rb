@@ -7,7 +7,8 @@ class ContextsController < ApplicationController
   end
 
   def about
-    add_breadcrumb "About", "/contexts/about"
     @context = Context.first
+
+    add_breadcrumb "About", "/contexts/about"
   end
 end
