@@ -9,9 +9,25 @@
             <h5 class="card-title"><%= link_to @image.anime.name, @image.anime %></h5>
             <p class="card-text"><%= @image.anime.description %></p>
           </div>
+
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Price: <%= @image.price %></li>
+            <% if !@image.discount.nil? && !@image.discount.zero? %>
+              <li class="list-group-item">
+                <%= number_to_currency (@image.price * (100 - @image.discount) / 100) / 100 %>
+                <span class="text-decoration-line-through text-danger">
+                  <%= number_to_currency @image.price / 100.0 %>
+                </span>
+                <span class="text-success">
+                  <%= @image.discount %>%
+                </span>
+              </li>
+            <% else %>
+              <li class="list-group-item">
+                <%= number_to_currency @image.price / 100.0 %>
+              </li>
+            <% end %>
           </ul>
+
         </div>
       </div>
   <% end %>
@@ -31,9 +47,25 @@
           <h5 class="card-title"><%= link_to type.name, products_find_path(:type => type, :anime => @image), :class => "card-link" %></h5>
           <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(type.updated_at) %> ago</small></p>
         </div>
+
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Price: <%= type.price %></li>
+          <% if !type.discount.nil? && !type.discount.zero? %>
+            <li class="list-group-item">
+              <%= number_to_currency (type.price * (100 - type.discount) / 100) / 100 %>
+              <span class="text-decoration-line-through text-danger">
+                <%= number_to_currency type.price / 100.0 %>
+              </span>
+              <span class="text-success">
+                <%= type.discount %>%
+              </span>
+            </li>
+          <% else %>
+            <li class="list-group-item">
+              <%= number_to_currency type.price / 100.0 %>
+            </li>
+          <% end %>
         </ul>
+
       </div>
     <% end %>
 
