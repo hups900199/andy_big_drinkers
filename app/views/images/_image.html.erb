@@ -7,6 +7,20 @@
     <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(image.updated_at) %> ago</small></p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Price: <%= image.price %></li>
+    <% if !image.discount.nil? && !image.discount.zero? %>
+      <li class="list-group-item">
+        <%= number_to_currency (image.price * (100 - image.discount) / 100) / 100 %>
+        <span class="text-decoration-line-through text-danger">
+          <%= number_to_currency image.price / 100.0 %>
+        </span>
+        <span class="text-success">
+          <%= image.discount %>%
+        </span>
+      </li>
+    <% else %>
+      <li class="list-group-item">
+        <%= number_to_currency image.price / 100.0 %>
+      </li>
+    <% end %>
   </ul>
 </div>
