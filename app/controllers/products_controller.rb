@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   add_breadcrumb "Home", :root_path
 
   def index
-    @products = Product.includes(:image).all.order("name ASC").page params[:page]
+    @products = Product.includes(:type).includes(:image).all.order("name ASC").page params[:page]
 
     add_breadcrumb "Products", "/products/index"
   end
