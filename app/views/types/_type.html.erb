@@ -1,6 +1,6 @@
 <div class="card text-center">
   <% if type.image.present? %>
-    <%= link_to image_tag(type.image, alt: type.name, size:"400x600", :class => "card-img-top"), type %>
+    <%= link_to image_tag(type.image.variant(resize_to_limit: [400, 600]).processed, alt: type.name, :class => "card-img-top"), type %>
   <% end %>
   <div class="card-body">
     <h5 class="card-title"><%= link_to type.name, type %></h5>

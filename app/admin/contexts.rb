@@ -11,7 +11,7 @@ ActiveAdmin.register Context do
     f.semantic_errors
     f.inputs
     f.inputs do
-      f.input :image, as: :file, hint: f.object.image.present? ? image_tag(f.object.image, size:"200x200") : ""
+      f.input :image, as: :file, hint: f.object.image.present? ? image_tag(f.object.image.variant(resize_to_limit: [200, 200]).processed) : ""
     end
     f.actions
   end

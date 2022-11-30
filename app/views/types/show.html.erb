@@ -4,7 +4,7 @@
   <% if @type.image.present? %>
     <div class="col-sm-4">
         <div class="card">
-          <%= image_tag(@type.image, alt: @type.name, :class => "card-img-top") %>
+          <%= image_tag(@type.image.variant(resize_to_limit: [400, 600]).processed, alt: @type.name, :class => "card-img-top") %>
           <div class="card-body">
             <h5 class="card-title"><%= @type.name %></h5>
             <p class="card-text"><%= @type.description %></p>
@@ -41,7 +41,7 @@
     <% @images.each do |image| %>
       <div class="card text-center">
         <% if image.image.present? %>
-          <%= link_to image_tag(image.image, alt: image.name, size:"400x600", :class => "card-img-top"), products_find_path(:type => @type, :anime => image) %>
+          <%= link_to image_tag(image.image.variant(resize_to_limit: [400, 600]).processed, alt: image.name, :class => "card-img-top"), products_find_path(:type => @type, :anime => image) %>
         <% end %>
         <div class="card-body">
           <h5 class="card-title"><%= link_to image.name, products_find_path(:type => @type, :anime => image), :class => "card-link" %></h5>
