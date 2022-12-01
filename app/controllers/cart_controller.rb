@@ -13,5 +13,12 @@ class CartController < ApplicationController
     redirect_to products_path
   end
 
-  def destroy; end
+  def destroy
+    id = params[:id].to_i
+    session[:shopping_cart].delete(id)
+    product = Product.find(id)
+
+    redirect_to products_path
+    flash[:notice] = " #{product.name} removed from cart."
+  end
 end
