@@ -1,41 +1,42 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'contexts/home'
-  get 'contexts/about'
+  get "contexts/home"
+  get "contexts/about"
 
-  get 'types/index'
-  get 'types/show'
-  get 'types/new_type'
-  get 'types/recent_update'
-  get 'types/on_sale'
+  get "types/index"
+  get "types/show"
+  get "types/new_type"
+  get "types/recent_update"
+  get "types/on_sale"
 
-  get 'products/index'
-  get 'products/show'
-  get 'products/find'
+  get "products/index"
+  get "products/show"
+  get "products/find"
 
-  get 'images/index'
-  get 'images/show'
-  get 'images/new_image'
-  get 'images/recent_update'
-  get 'images/on_sale'
+  get "images/index"
+  get "images/show"
+  get "images/new_image"
+  get "images/recent_update"
+  get "images/on_sale"
 
-  get 'animes/index'
-  get 'animes/show'
+  get "animes/index"
+  get "animes/show"
 
   root to: "contexts#home"
 
-  resources :types, only: [:index, :show, :new_type, :recent_update, :on_sale]
-  resources :products, only: [:index, :show, :find]
-  resources :images, only: [:index, :show, :new_type, :recent_update, :on_sale]
-  resources :contexts, only: [:home, :about]
+  resources :types, only: %i[index show new_type recent_update on_sale]
+  resources :products, only: %i[index show find]
+  resources :images, only: %i[index show new_type recent_update on_sale]
+  resources :contexts, only: %i[home about]
+  resources :cart, only: %i[create destroy]
 
-  resources :animes, only: [:index, :show] do
-    #movies/search/(:format)
+  resources :animes, only: %i[index show] do
+    # movies/search/(:format)
     collection do
       get "search"
     end
 
-    get '/page/:page', action: :index, on: :collection
+    get "/page/:page", action: :index, on: :collection
   end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
