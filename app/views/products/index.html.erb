@@ -2,6 +2,62 @@
   <h1 class="mb-0">Products</h1>
 </div>
 
+<%= debug session[:shopping_cart] %>
+<% if flash[:notice] %>
+  <p>
+    <%= flash[:notice] %>
+  </p>
+<% end %>
+
+<nav>
+  <nav>
+    <ul>
+      <li>
+        Cart
+        <% if cart.present? %>
+          <sup>
+            <%= cart.size %>
+          </sup>
+          <ul>
+
+            <% cart.each do |product| %>
+              <li>
+                <%= product.name %> <%= button_to "delete", cart_path(product), method: :delete %>
+              </li>
+            <% end %>
+
+          </ul>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+</nav>
+
+<details>
+  <summary>
+    Cart
+    <% if cart.present? %>
+      <sup>
+        <%= cart.size %>
+      </sup>
+    <% end %>
+  </summary>
+
+  <% if cart.present? %>
+    <ul>
+
+      <% cart.each do |product| %>
+        <li>
+          <%= product.name %> <%= button_to "delete", cart_path(product), method: :delete %>
+        </li>
+      <% end %>
+
+    </ul>
+  <% else %>
+    <p>No item in your cart!</p>
+  <% end %>
+</details>
+
 <%= paginate @products %>
 
 <div class="container">
