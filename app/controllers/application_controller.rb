@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   def initialize_session
     # Empty array of product IDs
     session[:shopping_cart] ||= []
-    session[:order_id] = 16
   end
 
   def cart
@@ -21,10 +20,16 @@ class ApplicationController < ActionController::Base
 
   def current_order
     # Use find by id to avoid potential errors
-    if Order.find_by_id(session[:order_id]).nil?
-      Order.new
-    else
-      Order.find_by_id(session[:order_id])
+    if session[:order_id]
+      @current_order ||= Order.find(session[:order_id])
+      # session[:order_id] = nil if @current_order.purchased_at
     end
+
+    if session[:order_id].nil?
+      @current_order = Order.create!
+      session[:order_id] = @current_order.id
+    end
+
+    @current_order
   end
 end
