@@ -12,14 +12,19 @@
   </head>
 
   <body>
+    <% if flash[:notice] %>
+      <p>
+        <%= flash[:notice] %>
+      </p>
+    <% end %>
+
     <%= render partial: 'shared/header' %>
 
     <div class="container nav-link px-2 fw-bold fs-6 text-dark">
       <%= render_breadcrumbs :separator => ' > ' %>
     </div>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
     <%= yield %>
 
     <%= render partial: 'shared/footer' %>
