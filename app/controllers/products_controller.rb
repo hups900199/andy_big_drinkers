@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.includes(:type).includes(:image).all.order("name ASC").page params[:page]
+    @order_items = current_order.order_items.new
 
     add_breadcrumb "Products", "/products/index"
   end
