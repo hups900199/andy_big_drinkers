@@ -22,11 +22,7 @@ Rails.application.routes.draw do
   get "animes/index"
   get "animes/show"
 
-  get 'order_items/create'
-  get 'order_items/update'
-  get 'order_items/destroy'
-
-  get "cart/show"
+  get "cart", to: "cart#show"
 
   root to: "contexts#home"
 
@@ -35,6 +31,7 @@ Rails.application.routes.draw do
   resources :images, only: %i[index show new_type recent_update on_sale]
   resources :contexts, only: %i[home about]
   resources :cart, only: %i[create destroy show]
+  resources :order_items
 
   resources :animes, only: %i[index show] do
     # movies/search/(:format)
