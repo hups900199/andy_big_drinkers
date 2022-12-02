@@ -3,13 +3,14 @@ class OrderItemsController < ApplicationController
 
   def create
     @order_item = @order.order_items.new(order_params)
-    @order.save
+    @order.save!
     session[:order_id] = @order.id
   end
 
   def update
     @order_item = @order.order_items.find(params[:id])
-    @order_item.update_attributes(order_params)
+    # @order_item.update_attribute(order_params)
+    @order_item.update(quantity: params[:quantity])
     @order_items = current_order.order_items
   end
 
@@ -26,6 +27,7 @@ class OrderItemsController < ApplicationController
   end
 
   def set_order
+    # @order = Order.all.first
     @order = current_order
   end
 end
