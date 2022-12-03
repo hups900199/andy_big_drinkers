@@ -1,0 +1,14 @@
+ID,Province,PST,GST,HST,TotalTaxRate
+1,"Alberta",0,5,0,5
+2,"British Columbia",7,5,0,12
+3,"Manitoba",7,5,0,12
+4,"New Brunswick",0,0,15,15
+5,"Newfoundland and Labrador",0,0,15,15
+6,"Northwest Territories",0,5,0,5
+7,"Nova Scotia",0,0,15,15
+8,"Nunavut",0,5,0,5
+9,"Ontario",0,0,13,13
+10,"Prince Edward Island",0,0,15,15
+11,"Quebec",9.975,5,0,14.975
+12,"Saskatchewan",6,5,0,11
+13,"Yukon",0,5,0,5

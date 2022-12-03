@@ -4,11 +4,14 @@ require "csv"
 # AdminUser.destroy_all
 OrderItem.destroy_all
 Order.destroy_all
+# User.destroy_all
+Province.destroy_all
 # Product.destroy_all
 # Image.destroy_all
 # Anime.destroy_all
 # Type.destroy_all
 # Context.destroy_all
+
 
 # Remove unwanted string.
 # def shorten_string(raw, target)
@@ -55,6 +58,20 @@ Order.destroy_all
 #   about: "Andy's Big Drinkers started in April 2019, and it was a small group of members that enjoyed watching anime. After several months, they decided to start a small business and sell anime side-produces, like water cups and T-shirts with anime images on it. The number has around 10 employees, and they currently sell products through the anime convention events, like Ai-Kon."
 # )
 # new_context.image.attach(io: File.open("app/assets/images/Logo.png"), filename: "Logo.png")
+
+# Loop through the rows of province CSV file.
+second_csv_file = Rails.root.join("db/province_tax.csv")
+second_csv_data = File.read(second_csv_file)
+
+provinces = CSV.parse(csv_data, headers: true)
+
+provinces.each do |province|
+  new_province = Province.find_or_create_by(name: province["Province"])
+  new_province.PST = province["PST"]
+  new_province.GST = province["GST"]
+  new_province.HST = province["HST"]
+  new_province.save!
+end
 
 # # Loop through the rows of first CSV file.
 # csv_file = Rails.root.join("db/anime_with_synopsis_shorten.csv")
