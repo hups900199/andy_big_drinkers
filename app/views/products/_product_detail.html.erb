@@ -18,27 +18,31 @@
       Total: <%= number_to_currency ((@product.type.price * (100 - @product.type.discount) / 100) + (@product.image.price * (100 - @product.image.discount) / 100)) / 100 %>
     </h5>
 
-    <% if current_order.order_items.where(product_id: @product.id).first.present? %>
+    <div class="input-group d-flex justify-content-center">
 
-      <%= form_with(url: order_item_path(current_order.order_items.where(product_id: @product.id).first), model: @order_item, method: :put, remote: true) do |f| %>
-        <%= f.hidden_field :product_id, value: @product.id %>
-        <%= f.number_field :quantity, value: current_order.order_items.where(product_id: @product.id).first.quantity.to_i, min: 1 %>
-        <%= f.submit "Update" %>
+      <% if current_order.order_items.where(product_id: @product.id).first.present? %>
+
+        <%= form_with(url: order_item_path(current_order.order_items.where(product_id: @product.id).first), model: @order_item, method: :put, remote: true) do |f| %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <%= f.number_field :quantity, value: current_order.order_items.where(product_id: @product.id).first.quantity.to_i, min: 1 %>
+          <%= f.submit "Update", :class => "btn btn-secondary" %>
+        <% end %>
+
+        <%= form_with(url: order_item_path(current_order.order_items.where(product_id: @product.id).first), method: :delete, remote: true) do |d| %>
+          <%= d.submit "Remove", :class => "btn btn-danger" %>
+        <% end %>
+
+      <% else %>
+
+        <%= form_with model: @order_item do |f| %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <%= f.number_field :quantity, value: 1, min: 1 %>
+          <%= f.submit "Add to Cart", :class => "btn btn-outline-secondary" %>
+        <% end %>
+
       <% end %>
 
-      <%= form_with(url: order_item_path(current_order.order_items.where(product_id: @product.id).first), method: :delete, remote: true) do |d| %>
-        <%= d.submit "Remove" %>
-      <% end %>
-
-    <% else %>
-
-      <%= form_with model: @order_item do |f| %>
-        <%= f.hidden_field :product_id, value: @product.id %>
-        <%= f.number_field :quantity, value: 1, min: 1 %>
-        <%= f.submit "Add to Cart" %>
-      <% end %>
-
-    <% end %>
+    </div>
 
   </div>
 
