@@ -12,8 +12,6 @@ class OrderItemsController < ApplicationController
 
   def update
     @order_item = current_order.order_items.find(params[:id])
-    # @order_item.update_attributes(order_params)
-    # @order_item.update(quantity: params[:quantity])
     @order_item.update(order_params)
     @order_items = current_order.order_items
 

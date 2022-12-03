@@ -8,14 +8,14 @@
           <li><a href=<%= images_index_path %> class="nav-link px-2 text-white">Images</a></li>
           <li><a href=<%= types_index_path %> class="nav-link px-2 text-white">Types</a></li>
           <li><a href=<%= products_index_path %> class="nav-link px-2 text-white">Products</a></li>
+          <li><a href=<%= cart_show_path %> class="nav-link px-2 text-white">Cart</a></li>
         </ul>
 
         <%= form_with(url: search_animes_path, method: :get, local: true) do %>
-          <div class="input-group">
+          <div class="input-group d-flex justify-content-end">
             <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search" name="keywords"/>
-
             <label class="input-group-text" for="searchCategory">Title</label>
-            <select id="searchCategory" class="form-control form-control-dark" name="anime">
+            <select id="searchCategory" class="form-control form-control-dark me-md-3" name="anime">
               <option value="">All</option>
               <% Anime.all.each do |anime| %>
               <option value=<%= anime.id %>><%= anime.name %></option>
