@@ -65,6 +65,6 @@
     </tbody>
   </table>
   <h3>Your current order has a total of: <%= number_to_currency current_order.subtotal / 100 %></h3>
-  <a class="btn btn-secondary" href="../account/signup.php">Create Account</a>
+  <a class="btn btn-secondary" href=<%= cart_checkout_path %>>Checkout</a>
   <a class="btn btn-secondary" href="../index.php">Cancel</a>
 </div>

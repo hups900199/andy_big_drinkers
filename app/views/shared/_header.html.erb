@@ -8,7 +8,14 @@
           <li><a href=<%= images_index_path %> class="nav-link px-2 text-white">Images</a></li>
           <li><a href=<%= types_index_path %> class="nav-link px-2 text-white">Types</a></li>
           <li><a href=<%= products_index_path %> class="nav-link px-2 text-white">Products</a></li>
-          <li><a href=<%= cart_show_path %> class="nav-link px-2 text-white">Cart</a></li>
+          <li><a href=<%= cart_show_path %> class="nav-link px-2 text-white">Cart
+            <% if !OrderItem.where(order_id: current_order.id).size.zero? %>
+              <span class="badge bg-primary rounded-pill">
+                <%= OrderItem.where(order_id: current_order.id).size %>
+              </span>
+            <% end %>
+            </a>
+          </li>
         </ul>
 
         <%= form_with(url: search_animes_path, method: :get, local: true) do %>
