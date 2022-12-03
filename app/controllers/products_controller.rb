@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @order_item = current_order.order_items.new
 
     add_breadcrumb "Products", "/products/index"
     add_breadcrumb @product.image.name, @product.image
@@ -19,6 +20,7 @@ class ProductsController < ApplicationController
 
   def find
     @product = Product.where(type_id: params[:type]).where(image_id: params[:anime]).first
+    @order_item = current_order.order_items.new
 
     add_breadcrumb "Products", "/products/index"
     add_breadcrumb @product.image.name, @product.image

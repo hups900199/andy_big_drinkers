@@ -1,0 +1,45 @@
+<div class="container">
+  <h1><%= @product.name %></h1>
+  <h5 class="card-text">In Stock: <%= @product.stock %></h5>
+  <p class="card-text"><small class="text-muted">Last updated <%= time_ago_in_words(@product.updated_at) %> ago</small></p>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+
+      <%= render @product.type %>
+
+      <%= render @product.image %>
+
+    </div>
+  </div>
+
+  <div id="intro" class="p-5 text-center">
+    <h5 class="card-text">
+      Total: <%= number_to_currency ((@product.type.price * (100 - @product.type.discount) / 100) + (@product.image.price * (100 - @product.image.discount) / 100)) / 100 %>
+    </h5>
+
+    <% if current_order.order_items.where(product_id: @product.id).first.present? %>
+
+      <%= form_with(url: order_item_path(current_order.order_items.where(product_id: @product.id).first), model: @order_item, method: :put, remote: true) do |f| %>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <%= f.number_field :quantity, value: current_order.order_items.where(product_id: @product.id).first.quantity.to_i, min: 1 %>
+        <%= f.submit "Update" %>
+      <% end %>
+
+      <%= form_with(url: order_item_path(current_order.order_items.where(product_id: @product.id).first), method: :delete, remote: true) do |d| %>
+        <%= d.submit "Remove" %>
+      <% end %>
+
+    <% else %>
+
+      <%= form_with model: @order_item do |f| %>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <%= f.number_field :quantity, value: 1, min: 1 %>
+        <%= f.submit "Add to Cart" %>
+      <% end %>
+
+    <% end %>
+
+  </div>
+
+</div>
