@@ -3,6 +3,7 @@ class OrderItemsController < ApplicationController
 
   def create
     @order_item = current_order.order_items.create(order_params)
+    @order_items = current_order.order_items
   end
 
   def update

@@ -1,11 +1,41 @@
 <% @order_items.each do |item| %>
   <h3><%= item.product.name %></h3>
-  <h3><%= item.product.image.price %></h3>
-  <h3><%= item.product.type.price %></h3>
+
+  <% if !item.product.image.discount.nil? && !item.product.image.discount.zero? %>
+    <h3 class="list-group-item">
+      <%= number_to_currency (item.product.image.price * (100 - item.product.image.discount) / 100) / 100 %>
+      <span class="text-decoration-line-through text-danger">
+        <%= number_to_currency item.product.image.price / 100.0 %>
+      </span>
+      <span class="text-success">
+        <%= item.product.image.discount %>%
+      </span>
+    </h3>
+  <% else %>
+    <h3 class="list-group-item">
+      <%= number_to_currency item.product.image.price / 100.0 %>
+    </h3>
+  <% end %>
+
+  <% if !item.product.type.discount.nil? && !item.product.type.discount.zero? %>
+    <h3 class="list-group-item">
+      <%= number_to_currency (item.product.type.price * (100 - item.product.type.discount) / 100) / 100 %>
+      <span class="text-decoration-line-through text-danger">
+        <%= number_to_currency item.product.type.price / 100.0 %>
+      </span>
+      <span class="text-success">
+        <%= item.product.type.discount %>%
+      </span>
+    </h3>
+  <% else %>
+    <h3 class="list-group-item">
+      <%= number_to_currency item.product.type.price / 100.0 %>
+    </h3>
+  <% end %>
 
   <%= form_with model: item do |f| %>
     <%= f.hidden_field :product_id, value: item.product.id %>
-    <%= f.number_field :quantity, value: item.quantity.to_i %>
+    <%= f.number_field :quantity, value: item.quantity.to_i, min: 1 %>
     <%= f.submit "Update Cart" %>
   <% end %>
 
@@ -13,7 +43,7 @@
     <%= d.submit "Remove" %>
   <% end %>
 
-  <h2>Subtotal: <%= item.total %></h2>
+  <h2>Subtotal: <%= number_to_currency item.total / 100 %></h2>
 <% end %>
 
-<h3>Your current order has a total of: <%= current_order.subtotal %></h3>
+<h3>Your current order has a total of: <%= number_to_currency current_order.subtotal / 100 %></h3>

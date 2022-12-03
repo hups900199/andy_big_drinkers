@@ -8,7 +8,7 @@ class OrderItem < ApplicationRecord
     if persisted?
       self[:unit_price]
     else
-      product.image.price
+      product.type.price * (100 - product.type.discount) / 100 + product.image.price * (100 - product.image.discount) / 100
     end
   end
 
