@@ -4,6 +4,10 @@ class OrderItemsController < ApplicationController
   def create
     @order_item = current_order.order_items.create(order_params)
     @order_items = current_order.order_items
+
+    flash[:notice] = " #{@order_item.product.name} added to cart."
+
+    redirect_back_or_to request.referrer
   end
 
   def update
@@ -12,12 +16,20 @@ class OrderItemsController < ApplicationController
     # @order_item.update(quantity: params[:quantity])
     @order_item.update(order_params)
     @order_items = current_order.order_items
+
+    flash[:notice] = " #{@order_item.product.name} updated from cart."
+
+    redirect_back_or_to request.referrer
   end
 
   def destroy
     @order_item = OrderItem.find(params[:id])
     @order_item.destroy
     @order_items = current_order.order_items
+
+    flash[:notice] = " #{@order_item.product.name} removed from cart."
+
+    redirect_back_or_to request.referrer
 
     #It will dictate what format the action will respond to
     respond_to do |format|
