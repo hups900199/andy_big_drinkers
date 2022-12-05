@@ -87,3 +87,5 @@ gem "net-http"
 
 # Breadcrumbs
 gem "breadcrumbs_on_rails"
+
+gem 'stripe'
