@@ -21,12 +21,38 @@ class CheckoutController < ApplicationController
     #   }
     # ]
 
+    @GST =
+      {
+        quantity:    1,
+        price_data: {
+          currency: "cad",
+          unit_amount: (current_order.subtotal * 0.05).to_i,
+          product_data: {
+              name:         "GST",
+              description:  "Goods and Services Taxes"
+          }
+        }
+      }
+
+    @PST =
+      {
+        quantity:    1,
+        price_data: {
+          currency: "cad",
+          unit_amount: (current_order.subtotal * 0.07).to_i,
+          product_data: {
+              name:         "PST",
+              description:  "Provincial and Services Taxes"
+          }
+        }
+      }
+
     @session = Stripe::Checkout::Session.create(
       payment_method_types: [:card],
       success_url:          checkout_success_url,
       cancel_url:           checkout_cancel_url,
       mode:                 'payment',
-      line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }
+      line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }.append(@GST).append(@PST)
     )
 
     redirect_to @session.url, allow_other_host: true
