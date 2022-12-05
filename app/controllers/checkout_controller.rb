@@ -18,10 +18,10 @@ class CheckoutController < ApplicationController
           quantity:    1, # hard code not good to do but for testing only
           price_data: {
             currency: "cad",
-            unit_amount: @product.image.price.to_i,
+            unit_amount: @product.image.price.to_i + @product.type.price.to_i,
             product_data: {
                 name: @product.name,
-                description: @product.image.anime.description,
+
             }
           }
         }
