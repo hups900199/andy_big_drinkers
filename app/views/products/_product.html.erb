@@ -31,32 +31,10 @@
       <%= form_with model: @order_item do |f| %>
         <%= f.hidden_field :product_id, value: product.id %>
         <%= f.hidden_field :quantity, value: 1, min: 1, :class => "form-control" %>
-        <%= f.submit "Add to Cart", :class => "btn btn-outline-secondary" %>
+        <%= f.submit "Add to Cart", :class => "btn btn-outline-secondary mt-md-1 mb-md-1" %>
       <% end %>
 
     <% end %>
 
-    <%= form_with url: checkout_create_path, remote: true do %>
-      <%= hidden_field_tag(:product_id, product.id) %>
-      <%= button_tag 'Buy Now' %>
-    <% end %>
   </div>
-
-
-
-  <% if cart.include?(product) %>
-
-    <%= button_to cart_path(product), method: :delete do %>
-      Remove From Cart
-    <% end %>
-
-  <% else %>
-
-    <%= form_with(url: cart_index_path, method: :post) do %>
-      <%= hidden_field_tag(:id, product.id) %>
-      <%= button_tag 'Add to Cart' %>
-    <% end %>
-
-  <% end %>
-
 </div>

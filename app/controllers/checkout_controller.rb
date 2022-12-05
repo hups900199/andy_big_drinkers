@@ -1,31 +1,32 @@
 class CheckoutController < ApplicationController
   def create
     # establish a connection with Stripe and then redirect the user to the payment screen
-    @product = Product.find(params[:product_id])
+    # @product = Product.find(params[:product_id])
 
-    if @product.nil?
-      redirect_to root_path
-      return
-    end
+    # if @product.nil?
+    #   redirect_to root_path
+    #   return
+    # end
+
+    # line_items:           [
+    #   {
+    #     quantity:    1, # hard code not good to do but for testing only
+    #     price_data: {
+    #       currency: "cad",
+    #       unit_amount: @product.image.price.to_i + @product.type.price.to_i,
+    #       product_data: {
+    #           name: @product.name
+    #       }
+    #     }
+    #   }
+    # ]
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: [:card],
       success_url:          checkout_success_url,
       cancel_url:           checkout_cancel_url,
-      mode: 'payment',
-      line_items:           [
-        {
-          quantity:    1, # hard code not good to do but for testing only
-          price_data: {
-            currency: "cad",
-            unit_amount: @product.image.price.to_i + @product.type.price.to_i,
-            product_data: {
-                name: @product.name,
-
-            }
-          }
-        }
-      ]
+      mode:                 'payment',
+      line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }
     )
 
     redirect_to @session.url, allow_other_host: true

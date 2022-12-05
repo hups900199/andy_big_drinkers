@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :images, only: %i[index show new_type recent_update on_sale]
   resources :contexts, only: %i[home about]
   resources :cart, only: %i[create destroy show checkout]
-  resources :order_items, only: %i[create destroy update]
+  resources :order_items
 
   resources :animes, only: %i[index show] do
     # movies/search/(:format)

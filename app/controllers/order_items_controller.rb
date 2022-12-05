@@ -28,15 +28,6 @@ class OrderItemsController < ApplicationController
     flash[:notice] = " #{@order_item.product.name} removed from cart."
 
     redirect_back_or_to request.referrer
-
-    #It will dictate what format the action will respond to
-    respond_to do |format|
-      # when responding to a html request, it will respond by going into /app/views/students/destroy.html.erb
-      format.html
-
-      #when responding to a json request, it will respond by generating js code located in /app/views/students/destroy.js.erb
-      format.js
-    end
   end
 
   private

@@ -72,11 +72,7 @@
     <% end %>
   </select>
 
-  <a class="btn btn-secondary" href=<%= cart_checkout_path %>>Checkout</a>
-  <a class="btn btn-secondary" href="../index.php">Cancel</a>
-
   <% if current_order.order_items.present? %>
-
-    <%= button_to "Buy Now!", checkout_create_path, remote: true %>
+    <%= button_to "Checkout Now!", checkout_create_path, remote: true %>
   <% end %>
 </div>

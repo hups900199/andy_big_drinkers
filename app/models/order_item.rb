@@ -16,6 +16,13 @@ class OrderItem < ApplicationRecord
     return unit_price * quantity
   end
 
+  def to_builder
+    Jbuilder.new do |item|
+      item.quantity quantity
+      item.price_data product.to_builder
+    end
+  end
+
   private
 
   def set_unit_price
