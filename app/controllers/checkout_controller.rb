@@ -28,11 +28,7 @@ class CheckoutController < ApplicationController
       ]
     )
 
-    #It will dictate what format the action will respond to
-    respond_to do |format|
-      #when responding to a json request, it will respond by generating js code located in /app/views/students/destroy.js.erb
-      format.js
-    end
+    redirect_to @session.url, allow_other_host: true
   end
 
   def success
