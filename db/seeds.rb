@@ -2,8 +2,8 @@ require "csv"
 
 # Clear the products and categories tables.
 # AdminUser.destroy_all
-OrderItem.destroy_all
-Order.destroy_all
+# OrderItem.destroy_all
+# Order.destroy_all
 # User.destroy_all
 Province.destroy_all
 # Product.destroy_all
@@ -63,7 +63,7 @@ Province.destroy_all
 second_csv_file = Rails.root.join("db/province_tax.csv")
 second_csv_data = File.read(second_csv_file)
 
-provinces = CSV.parse(csv_data, headers: true)
+provinces = CSV.parse(second_csv_data, headers: true)
 
 provinces.each do |province|
   new_province = Province.find_or_create_by(name: province["Province"])
@@ -180,5 +180,6 @@ end
 # puts "Created #{Type.count} Types"
 # puts "Created #{Product.count} Products"
 # puts "Created #{Context.count} Contexts"
+puts "Created #{Province.count} Provinces"
 
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
