@@ -25,6 +25,12 @@ Rails.application.routes.draw do
   get "cart/show"
   get "cart/checkout"
 
+  scope "/checkout" do
+    post  "create",   to: "checkout#create",  as: "checkout_create"
+    get   "success",  to: "checkout#success", as: "checkout_success"
+    get   "cancel",   to: "checkout#cancel",  as: "checkout_cancel"
+  end
+
   root to: "contexts#home"
 
   resources :types, only: %i[index show new_type recent_update on_sale]
