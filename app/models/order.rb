@@ -6,9 +6,12 @@ class Order < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :user_id, presence: false
+  validates :payment, presence: false, uniqueness: true
 
   def subtotal
-    order_items.collect { |order_item| order_item.valid? ? order_item.unit_price * order_item.quantity : 0 }.sum
+    order_items.collect do |order_item|
+      order_item.valid? ? order_item.unit_price * order_item.quantity : 0
+    end.sum
   end
 
   private
