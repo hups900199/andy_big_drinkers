@@ -13,7 +13,7 @@ class OrderItem < ApplicationRecord
   end
 
   def total
-    return unit_price * quantity
+    unit_price * quantity
   end
 
   def to_builder

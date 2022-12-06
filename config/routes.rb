@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   get "cart/show"
   get "cart/checkout"
 
-  get 'orders/show'
+  get "orders/index"
+  get "orders/show"
 
   scope "/checkout" do
     post  "create",   to: "checkout#create",  as: "checkout_create"

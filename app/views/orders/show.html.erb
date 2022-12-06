@@ -1,1 +1,5 @@
-<%= render @orders %>
+<div id="intro" class="p-5 text-center">
+  <h1 class="mb-0"><%= @order.payment %></h1>
+</div>
+
+<%= render 'order_items' %>

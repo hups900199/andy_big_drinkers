@@ -1,2 +1,9 @@
 <%= debug @session %>
 <%= debug @payment_intent %>
+<% @line_items.each do |d| %>
+  <%= d.description %>
+  <%= d.price.unit_amount %>
+  <%= d.quantity %>
+  <%= d.amount_subtotal %>
+<% end %>
+<%= @line_items %>

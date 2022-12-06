@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  add_breadcrumb "Home", :root_path
+
   def create
     logger.debug("Adding #{params[:id]} to cart.")
     id = params[:id].to_i
@@ -25,9 +27,9 @@ class CartController < ApplicationController
   def show
     @order_items = current_order.order_items
     @provinces = Province.all
+
+    add_breadcrumb "Cart"
   end
 
-  def checkout
-
-  end
+  def checkout; end
 end

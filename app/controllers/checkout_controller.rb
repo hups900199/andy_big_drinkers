@@ -41,8 +41,8 @@ class CheckoutController < ApplicationController
   def success
     # we took the customer's money
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
-    # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
-    @payment_intent = [@session.payment_status, @session.amount_subtotal]
+    @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
+    @line_items = Stripe::Checkout::Session.list_line_items(params[:session_id], {limit: 99})
 
     current_order.update(total: @session.amount_total, payment: params[:session_id],
                          status: @session.payment_status)
