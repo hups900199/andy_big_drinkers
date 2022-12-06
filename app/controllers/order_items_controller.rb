@@ -7,7 +7,7 @@ class OrderItemsController < ApplicationController
 
     flash[:notice] = " #{@order_item.product.name} added to cart."
 
-    redirect_back_or_to request.referrer
+    redirect_back_or_to request.referer
   end
 
   def update
@@ -15,9 +15,11 @@ class OrderItemsController < ApplicationController
     @order_item.update(order_params)
     @order_items = current_order.order_items
 
+    # current_user.update(admin: true)
+
     flash[:notice] = " #{@order_item.product.name} updated from cart."
 
-    redirect_back_or_to request.referrer
+    redirect_back_or_to request.referer
   end
 
   def destroy
@@ -27,7 +29,7 @@ class OrderItemsController < ApplicationController
 
     flash[:notice] = " #{@order_item.product.name} removed from cart."
 
-    redirect_back_or_to request.referrer
+    redirect_back_or_to request.referer
   end
 
   private
