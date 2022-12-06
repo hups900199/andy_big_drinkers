@@ -18,6 +18,11 @@
             <%= f.label :province_id, :class => "form-label" %>
           </div>
 
+          <div class="form-outline mb-4">
+            <%= f.text_field :address, autofocus: true, autocomplete: "address", :class => "form-control form-control-lg" %>
+            <%= f.label :address, :class => "form-label" %>
+          </div>
+
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div class="form-check">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
           <% end %>

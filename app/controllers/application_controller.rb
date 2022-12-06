@@ -14,7 +14,13 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:province_id, :email, :password, :current_password) }
+    devise_parameter_sanitizer.permit(:sign_up) do |u|
+      u.permit(:province_id, :email, :password, :password_confirmation, :remember_me)
+    end
+
+    devise_parameter_sanitizer.permit(:account_update) do |u|
+      u.permit(:address, :province_id, :email, :password, :password_confirmation, :current_password)
+    end
   end
 
   private
@@ -34,7 +40,7 @@ class ApplicationController < ActionController::Base
     # Use find by id to avoid potential errors
     if session[:order_id]
       @current_order ||= Order.find(session[:order_id])
-      # session[:order_id] = nil if @current_order.purchased_at
+      session[:order_id] = nil if @current_order.status
     end
 
     if session[:order_id].nil?
