@@ -1,58 +1,37 @@
 class CheckoutController < ApplicationController
+  def format_taxes(name, percentage, description)
+    array =
+    {
+      quantity:    1,
+      price_data: {
+        currency: "cad",
+        unit_amount: (current_order.subtotal * percentage / 100).to_i,
+        product_data: {
+            name:         "#{name} #{percentage}%",
+            description:  description
+        }
+      }
+    }
+
+    return array
+  end
+
   def create
-    # establish a connection with Stripe and then redirect the user to the payment screen
-    # @product = Product.find(params[:product_id])
+    if user_signed_in?
+      current_user.update(province_id: params[:province_id])
+    end
 
-    # if @product.nil?
-    #   redirect_to root_path
-    #   return
-    # end
-
-    # line_items:           [
-    #   {
-    #     quantity:    1, # hard code not good to do but for testing only
-    #     price_data: {
-    #       currency: "cad",
-    #       unit_amount: @product.image.price.to_i + @product.type.price.to_i,
-    #       product_data: {
-    #           name: @product.name
-    #       }
-    #     }
-    #   }
-    # ]
-
-    @GST =
-      {
-        quantity:    1,
-        price_data: {
-          currency: "cad",
-          unit_amount: (current_order.subtotal * 0.05).to_i,
-          product_data: {
-              name:         "GST",
-              description:  "Goods and Services Taxes"
-          }
-        }
-      }
-
-    @PST =
-      {
-        quantity:    1,
-        price_data: {
-          currency: "cad",
-          unit_amount: (current_order.subtotal * 0.07).to_i,
-          product_data: {
-              name:         "PST",
-              description:  "Provincial and Services Taxes"
-          }
-        }
-      }
+    @selected_province = Province.find(params[:province_id])
 
     @session = Stripe::Checkout::Session.create(
       payment_method_types: [:card],
       success_url:          checkout_success_url,
       cancel_url:           checkout_cancel_url,
       mode:                 'payment',
-      line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }.append(@GST).append(@PST)
+      line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }
+      .append(format_taxes("GST", @selected_province.GST, "Goods and Services Taxes"))
+      .append(format_taxes("HST", @selected_province.HST, "Harmonized Sales Taxes"))
+      .append(format_taxes("PST", @selected_province.PST, "Provincial and Services Taxes"))
     )
 
     redirect_to @session.url, allow_other_host: true
