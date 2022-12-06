@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get "cart/show"
   get "cart/checkout"
 
+  get 'orders/show'
+
   scope "/checkout" do
     post  "create",   to: "checkout#create",  as: "checkout_create"
     get   "success",  to: "checkout#success", as: "checkout_success"
@@ -39,6 +41,7 @@ Rails.application.routes.draw do
   resources :contexts, only: %i[home about]
   resources :cart, only: %i[create destroy show checkout]
   resources :order_items
+  resources :orders
 
   resources :animes, only: %i[index show] do
     # movies/search/(:format)

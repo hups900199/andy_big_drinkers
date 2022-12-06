@@ -1,19 +1,16 @@
 class CheckoutController < ApplicationController
   def format_taxes(name, percentage, description)
-    array =
     {
-      quantity:    1,
+      quantity:   1,
       price_data: {
-        currency: "cad",
-        unit_amount: (current_order.subtotal * percentage / 100).to_i,
+        currency:     "cad",
+        unit_amount:  (current_order.subtotal * percentage / 100).to_i,
         product_data: {
-            name:         "#{name} #{percentage}%",
-            description:  description
+          name:        "#{name} #{percentage}%",
+          description: description
         }
       }
     }
-
-    return array
   end
 
   def create
@@ -25,12 +22,14 @@ class CheckoutController < ApplicationController
     @selected_province = Province.find(params[:province_id])
 
     @session = Stripe::Checkout::Session.create(
-      shipping_address_collection: {allowed_countries: ['CA']},
-      payment_method_types: [:card],
-      success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url:           checkout_cancel_url,
-      mode:                 'payment',
-      line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }
+      shipping_address_collection: { allowed_countries: ["US", "CA"] },
+      payment_method_types:        [:card],
+      success_url:                 checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url:                  checkout_cancel_url,
+      mode:                        "payment",
+      line_items:                  current_order.order_items.collect do |item|
+                                     item.to_builder.attributes!
+                                   end
       .append(format_taxes("GST", @selected_province.GST, "Goods and Services Taxes"))
       .append(format_taxes("HST", @selected_province.HST, "Harmonized Sales Taxes"))
       .append(format_taxes("PST", @selected_province.PST, "Provincial and Services Taxes"))
@@ -45,7 +44,8 @@ class CheckoutController < ApplicationController
     # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
     @payment_intent = [@session.payment_status, @session.amount_subtotal]
 
-    current_order.update(total: @session.amount_total,payment: params[:session_id], status: @session.payment_status)
+    current_order.update(total: @session.amount_total, payment: params[:session_id],
+                         status: @session.payment_status)
   end
 
   def cancel

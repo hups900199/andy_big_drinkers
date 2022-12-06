@@ -42,7 +42,7 @@
               <%= image_tag('Logo.png', draggable: "true", id: "drag1", alt: "Logo", size:"32x32", :class => "rounded-circle") %>
             </a>
             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="http://localhost:31337/project/project1.0/account/create.php">New Post</a></li>
+              <li><a class="dropdown-item" href=<%= orders_show_path %>>My Orders</a></li>
               <li><a class="dropdown-item" href=<%= edit_user_registration_path %>>Settings</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><%= button_to "Sign out", destroy_user_session_path, :class => "dropdown-item", method: :delete %></li>
