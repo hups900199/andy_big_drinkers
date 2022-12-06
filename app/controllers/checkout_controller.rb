@@ -24,8 +24,9 @@ class CheckoutController < ApplicationController
     @selected_province = Province.find(params[:province_id])
 
     @session = Stripe::Checkout::Session.create(
+      shipping_address_collection: {allowed_countries: ['CA']},
       payment_method_types: [:card],
-      success_url:          checkout_success_url,
+      success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url:           checkout_cancel_url,
       mode:                 'payment',
       line_items:           current_order.order_items.collect { |item| item.to_builder.attributes! }
@@ -39,6 +40,9 @@ class CheckoutController < ApplicationController
 
   def success
     # we took the customer's money
+
+    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
   end
 
   def cancel
