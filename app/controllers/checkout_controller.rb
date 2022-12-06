@@ -19,6 +19,7 @@ class CheckoutController < ApplicationController
   def create
     if user_signed_in?
       current_user.update(province_id: params[:province_id])
+      current_order.update(user_id: current_user.id)
     end
 
     @selected_province = Province.find(params[:province_id])
@@ -44,7 +45,7 @@ class CheckoutController < ApplicationController
     # @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
     @payment_intent = [@session.payment_status, @session.amount_subtotal]
 
-    current_order.update(payment: params[:session_id], status: @session.payment_status)
+    current_order.update(total: @session.amount_total,payment: params[:session_id], status: @session.payment_status)
   end
 
   def cancel

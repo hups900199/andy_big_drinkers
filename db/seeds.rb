@@ -12,7 +12,6 @@ Anime.destroy_all
 Type.destroy_all
 Context.destroy_all
 
-
 # Remove unwanted string.
 def shorten_string(raw, target)
   unwanted_string_length = raw.index(target) + target.length + 1

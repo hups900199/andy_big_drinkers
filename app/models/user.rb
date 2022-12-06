@@ -6,5 +6,5 @@ class User < ApplicationRecord
 
   has_many :orders
 
-  belongs_to :province
+  belongs_to :province, optional: true
 end

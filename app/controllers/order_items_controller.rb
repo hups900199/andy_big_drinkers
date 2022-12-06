@@ -2,7 +2,7 @@ class OrderItemsController < ApplicationController
   before_action :set_order
 
   def create
-    @order_item = current_order.order_items.create(order_params)
+    @order_item = @order.order_items.create(order_params)
     @order_items = current_order.order_items
 
     flash[:notice] = " #{@order_item.product.name} added to cart."
@@ -11,7 +11,7 @@ class OrderItemsController < ApplicationController
   end
 
   def update
-    @order_item = current_order.order_items.find(params[:id])
+    @order_item = @order.order_items.find(params[:id])
     @order_item.update(order_params)
     @order_items = current_order.order_items
 
