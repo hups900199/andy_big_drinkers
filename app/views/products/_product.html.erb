@@ -17,8 +17,8 @@
     <% if current_order.order_items.where(product_id: product.id).first.present? %>
 
       <%= form_with(url: order_item_path(current_order.order_items.where(product_id: product.id).first), model: @order_item, method: :put, remote: true) do |f| %>
-        <%= f.hidden_field :product_id, value: product.id %>
-        <%= f.number_field :quantity, value: current_order.order_items.where(product_id: product.id).first.quantity.to_i, min: 1, :class => "col-sm-2" %>
+        <%= f.hidden_field :product_id, value: product.id, namespace: product.id %>
+        <%= f.number_field :quantity, value: current_order.order_items.where(product_id: product.id).first.quantity.to_i, min: 1, namespace: "#{product.id}_quantity", :class => "col-sm-2" %>
         <%= f.submit "Update", :class => "btn btn-outline-secondary" %>
       <% end %>
 
@@ -29,8 +29,8 @@
     <% else %>
 
       <%= form_with model: @order_item do |f| %>
-        <%= f.hidden_field :product_id, value: product.id %>
-        <%= f.hidden_field :quantity, value: 1, min: 1, :class => "form-control" %>
+        <%= f.hidden_field :product_id, value: product.id, namespace: product.id %>
+        <%= f.hidden_field :quantity, value: 1, :class => "form-control", namespace: "#{product.id}_quantity" %>
         <%= f.submit "Add to Cart", :class => "btn btn-outline-secondary mt-md-1 mb-md-1" %>
       <% end %>
 

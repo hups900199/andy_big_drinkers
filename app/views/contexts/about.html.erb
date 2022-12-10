@@ -3,7 +3,7 @@
     <div class="col">
       <h1><%= @context.title %></h1>
       <% if @context.image.present? %>
-      <%= image_tag(@context.image.variant(resize_to_limit: [400, 400]).processed, draggable: "true", id: "drag1", alt: @context.title) %>
+      <%= image_tag(@context.image.variant(resize_to_limit: [400, 400]).processed, alt: @context.title) %>
       <% end %>
     </div>
     <div class="col">

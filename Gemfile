@@ -89,3 +89,5 @@ gem "net-http"
 gem "breadcrumbs_on_rails"
 
 gem 'stripe'
+
+gem 'bootstrap', '~> 5.1.3'
