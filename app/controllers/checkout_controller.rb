@@ -50,5 +50,7 @@ class CheckoutController < ApplicationController
 
   def cancel
     # something went wrong with payment
+
+    redirect_to cart_show_path
   end
 end

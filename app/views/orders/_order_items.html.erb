@@ -2,7 +2,6 @@
   <table class="table table-dark table-striped text-center align-middle">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Product Name</th>
         <th scope="col">Unit Price</th>
         <th scope="col">Quantity</th>
@@ -13,13 +12,21 @@
 
       <% @line_items.each do |item| %>
         <tr>
-          <th scope="row"><%= item.id %></th>
           <td><%= link_to item.description, Product.where(name: item.description).first, :class => "nav-link px-2 text-white" %></td>
           <td><%= number_to_currency item.price.unit_amount / 100.0 %></td>
           <td><%= item.quantity %></td>
-          <td><%= number_to_currency item.amount_subtotal / 100 %></td>
+          <td><%= number_to_currency item.amount_subtotal / 100.0 %></td>
         </tr>
       <% end %>
+
     </tbody>
+
+    <thead>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= number_to_currency @line_items.collect { |order_item| order_item.price.unit_amount * order_item.quantity }.sum / 100.0 %></td>
+    </thead>
+
   </table>
 </div>

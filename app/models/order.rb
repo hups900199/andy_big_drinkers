@@ -6,7 +6,7 @@ class Order < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :user_id, presence: false
-  validates :payment, presence: false, uniqueness: true
+  validates :payment, presence: false, uniqueness: false
 
   def subtotal
     order_items.collect do |order_item|

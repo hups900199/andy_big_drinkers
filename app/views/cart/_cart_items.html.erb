@@ -69,7 +69,11 @@
   <% if current_order.order_items.present? %>
     <%= form_with(url: checkout_create_path, remote: true) do |f| %>
       <%= f.label :province_id, :class => "form-label" %>
-      <%= f.select(:province_id, options_for_select(Province.all.collect {|p| [ p.name, p.id ] }, current_user.province_id), { include_blank: true }, :required => 'required',  :class => 'form-control form-control-lg')%>
+      <% if user_signed_in? %>
+        <%= f.select(:province_id, options_for_select(Province.all.collect {|p| [ p.name, p.id ] }, current_user.province_id), { include_blank: true }, :required => 'required',  :class => 'form-control form-control-lg')%>
+      <% else %>
+        <%= f.select(:province_id, options_for_select(Province.all.collect {|p| [ p.name, p.id ] }), { include_blank: true }, :required => 'required',  :class => 'form-control form-control-lg')%>
+      <% end %>
       <%= f.submit "Checkout Now!", :class => "btn btn-outline-secondary mt-md-5 mb-md-1" %>
     <% end %>
   <% end %>
