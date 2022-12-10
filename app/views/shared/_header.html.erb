@@ -46,7 +46,7 @@
               <li><a class="dropdown-item" href=<%= orders_index_path %>>My Orders</a></li>
               <li><a class="dropdown-item" href=<%= edit_user_registration_path %>>Settings</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><%= link_to "Sign Out", destroy_user_session_path, data: { turbo: true, turbo_method: :delete }, :class => "dropdown-item" %></li>
+              <li><%= button_to "Sign out", destroy_user_session_path, :html_options => nil, :class => "dropdown-item", method: :delete %></li>
             </ul>
           </div>
         <% end %>
