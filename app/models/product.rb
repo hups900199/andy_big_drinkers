@@ -11,7 +11,7 @@ class Product < ApplicationRecord
   validates :stock, presence: true
   validates_length_of :name, minimum: 1, maximum: 100, allow_blank: false
 
-  def display_name
+  def aaaa
     Jbuilder.new do |product|
       product.name self.name
     end
@@ -21,7 +21,7 @@ class Product < ApplicationRecord
     Jbuilder.new do |product|
       product.currency "cad"
       product.unit_amount ((type.price * (100 - type.discount) / 100 + image.price * (100 - image.discount) / 100)).to_i
-      product.product_data self.display_name
+      product.product_data self.aaaa
     end
   end
 end
